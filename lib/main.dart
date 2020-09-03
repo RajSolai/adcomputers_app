@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      title: 'AD Computers',
       debugShowCheckedModeBanner: false,
       home: Splash(),
       routes: {

@@ -9,7 +9,7 @@ class _SplashState extends State<Splash> {
 
   _navigator() async {
     await Future.delayed(Duration(seconds: 3));
-    //Navigator.pushReplacementNamed(context, "/home");
+    Navigator.pushReplacementNamed(context, "/home");
   }
 
   @override
