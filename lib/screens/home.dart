@@ -1,3 +1,6 @@
+import 'package:adcomputers_app/screens/tabs/buyp.dart';
+import 'package:adcomputers_app/screens/tabs/repair.dart';
+import 'package:adcomputers_app/screens/tabs/sell.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import "package:flutter/material.dart";
 import 'package:adcomputers_app/screens/tabs/buy.dart';
@@ -13,7 +16,16 @@ class _HomeState extends State<Home> {
 
   final _screens = [
     Center(
+      child: Repair(),
+    ),
+    Center(
       child: Buy(),
+    ),
+    Center(
+      child: BuyPeri(),
+    ),
+    Center(
+      child: Sell(),
     ),
     Center(
       child: Contact(),
@@ -33,7 +45,18 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(
               title: Text(
-                "Home",
+                "Repair & Service",
+                style: TextStyle(
+                    color: Color(0xff0f4c75)
+                ),
+              ),
+              icon: FaIcon(
+                FontAwesomeIcons.tools,
+                color: Color(0xff0f4c75),
+              )),
+          BottomNavigationBarItem(
+              title: Text(
+                "Buy Computers",
                 style: TextStyle(
                     color: Color(0xff0f4c75)
                 ),
@@ -44,13 +67,35 @@ class _HomeState extends State<Home> {
               )),
           BottomNavigationBarItem(
               title: Text(
-                "Tech",
+                "Buy Peripherals",
+                style: TextStyle(
+                    color: Color(0xff0f4c75)
+                ),
+              ),
+              icon: FaIcon(
+                FontAwesomeIcons.microchip,
+                color: Color(0xff0f4c75),
+              )),
+          BottomNavigationBarItem(
+              title: Text(
+                "Sell Computers",
+                style: TextStyle(
+                    color: Color(0xff0f4c75)
+                ),
+              ),
+              icon: FaIcon(
+                  FontAwesomeIcons.rupeeSign,
+                  color: Color(0xff0f4c75)
+              )),
+          BottomNavigationBarItem(
+              title: Text(
+                "Chat",
                 style: TextStyle(
                   color: Color(0xff0f4c75)
                 ),
               ),
               icon: FaIcon(
-                FontAwesomeIcons.phoneAlt,
+                FontAwesomeIcons.solidPaperPlane,
                 color: Color(0xff0f4c75)
               )),
         ],

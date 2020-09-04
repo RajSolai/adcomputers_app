@@ -1,4 +1,4 @@
-import 'package:adcomputers_app/screens/filter.dart';
+import 'package:adcomputers_app/screens/filterresults.dart';
 import 'package:adcomputers_app/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +21,12 @@ class _BuyState extends State<Buy> {
             actions: [
               IconButton(
                 iconSize: 20.0,
-                icon: FaIcon(FontAwesomeIcons.filter),
+                icon: FaIcon(FontAwesomeIcons.search),
                 onPressed: () {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (BuildContext context) => Filter()));
+                          builder: (BuildContext context) => FilterResults()));
                 },
               )
             ],

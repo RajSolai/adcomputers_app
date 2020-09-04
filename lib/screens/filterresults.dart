@@ -1,33 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:adcomputers_app/components/card.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FilterResults extends StatefulWidget {
-  final String brand,price,type;
-  final String apiUri = "https://adcomputerapi";
-  FilterResults({this.brand,this.price,this.type});
 
   @override
   _FilterResultsState createState() => _FilterResultsState();
 }
 
 class _FilterResultsState extends State<FilterResults> {
-
-  String genUri(){
-    String uri;
-    if(widget.brand!="Any Brand" && widget.price!="Any Price Range"){
-      uri = widget.apiUri+"/"+widget.brand+"/"+widget.price;
-    }else{
-      uri = widget.apiUri+"/";
-    }
-    return uri;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(genUri());
-  }
+  String searchKey;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +18,45 @@ class _FilterResultsState extends State<FilterResults> {
         title: Text("Filter Results"),
       ),
       body: Container(
-        child: ListView(
+        child: Column(
           children: [
-            Cards(),
-            Cards(),
-            Cards()
+            SizedBox(
+              height: 10.0,
+              child: Container(
+                color: Color(0xffcccccc),
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                fillColor: Color(0xffcccccc),
+                filled: true,
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 5.0,
+                    left: 15.0
+                  ),
+                  child: FaIcon(
+                    FontAwesomeIcons.search
+                  ), // myIcon is a 48px-wide widget.
+                ),
+                hintText: "Search Products here"
+              ),
+              onChanged: (String value) {
+                searchKey = value;
+              }
+            ),
+            SizedBox(
+             height: 10.0,
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  Cards(),
+                  Cards(),
+                  Cards()
+                ],
+              )
+            )
           ],
         ),
       )
