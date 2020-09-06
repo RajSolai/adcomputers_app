@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:adcomputers_app/classes/chat.dart';
 import 'package:adcomputers_app/components/msgbox.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +13,9 @@ class _ContactState extends State<Contact> {
   List data;
   String message;
   Timer timer;
+  bool isLoading = true;
+  ScrollController _scrollController = new ScrollController();
+  TextEditingController _messageCtrl = new TextEditingController();
 
   Future<void> get() async {
     await http
@@ -22,21 +24,19 @@ class _ContactState extends State<Contact> {
       data = json.decode(res.body);
       setState(() {
         data = data;
+        isLoading = false;
       });
     });
   }
 
-  send() async{
-    await http.post(
-        "http://fast-atoll-71004.herokuapp.com/api/chat/my69uid",
-        body: {
-          "message":message,
-          "peerid": "my62uid", //TODO: put uid of the user
-          "timestamp": DateTime.now().toIso8601String()
-        }
-    );
+  send() async {
+    await http
+        .post("http://fast-atoll-71004.herokuapp.com/api/chat/my69uid", body: {
+      "message": message,
+      "peerid": "my62uid", //TODO: put uid of the user
+      "timestamp": DateTime.now().toIso8601String()
+    }).then((value) => _messageCtrl.clear());
   }
-
 
   @override
   void initState() {
@@ -47,15 +47,26 @@ class _ContactState extends State<Contact> {
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 300), () {
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+    });
     return Container(
       child: Column(
         children: [
           AppBar(
-            title: Text("Chat"),
+            title: isLoading
+                ? Text("Loading....")
+                : Text(
+                    "Chat",
+                    style: TextStyle(color: Colors.black),
+                  ),
+            backgroundColor: isLoading ? Colors.red : Color(0xfffafafa),
           ),
           Container(
             child: Expanded(
                 child: ListView.builder(
+                    controller: _scrollController,
                     scrollDirection: Axis.vertical,
                     padding: EdgeInsets.all(0),
                     physics: AlwaysScrollableScrollPhysics(),
@@ -68,7 +79,8 @@ class _ContactState extends State<Contact> {
                     })),
           ),
           TextField(
-            onChanged: (value){
+            controller: _messageCtrl,
+            onChanged: (value) {
               setState(() {
                 message = value;
               });
@@ -85,6 +97,7 @@ class _ContactState extends State<Contact> {
       ),
     );
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -92,4 +105,3 @@ class _ContactState extends State<Contact> {
     timer.cancel();
   }
 }
-

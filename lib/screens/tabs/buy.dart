@@ -17,11 +17,16 @@ class _BuyState extends State<Buy> {
       child: Column(
         children: [
           AppBar(
-            title: Text("Buy Computers"),
+            title: Text(
+              "Buy Computers",
+              style: TextStyle(
+                color: Colors.black
+              ),
+            ),
             actions: [
               IconButton(
                 iconSize: 20.0,
-                icon: FaIcon(FontAwesomeIcons.search),
+                icon: FaIcon(FontAwesomeIcons.search,color: Colors.black,),
                 onPressed: () {
                   Navigator.push(
                       context,

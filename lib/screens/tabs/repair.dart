@@ -10,7 +10,12 @@ class _RepairState extends State<Repair> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Repair Computers"),
+        title: Text(
+          "Repair Computers",
+          style: TextStyle(
+              color: Colors.black
+          ),
+        ),
       ),
       body: Container(
         child: SingleChildScrollView(

@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         cardColor: Color(0xfffafafa),
         buttonColor: Color(0xff0f4c75),
         appBarTheme: AppBarTheme(
-          color: Color(0xff0f4c75),
+          color: Color(0xfffafafa),
+          elevation: 0.0,
           centerTitle: true
         )
       ),

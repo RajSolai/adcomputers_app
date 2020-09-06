@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
 class MessageBox extends StatefulWidget {
   final peeruid , message;
@@ -12,7 +12,7 @@ class MessageBox extends StatefulWidget {
 }
 
 class _MessageBoxState extends State<MessageBox> {
-  String uid = "my62uid"; //TODO: change in production or testing
+  String uid = "my69uid"; //TODO: change in production or testing
 
   Future<void> _getUID() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -22,8 +22,14 @@ class _MessageBoxState extends State<MessageBox> {
   }
 
   @override
+  void initState() {
+    // TODO: implement uid getter here
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (uid != widget.peeruid) {
+    if (uid == widget.peeruid) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -46,7 +52,7 @@ class _MessageBoxState extends State<MessageBox> {
           ),
         ],
       );
-    } else {
+    } else if(uid!=widget.peeruid) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -62,6 +68,8 @@ class _MessageBoxState extends State<MessageBox> {
           )
         ],
       );
+    }else{
+      return Text("hello");
     }
   }
 }

@@ -16,7 +16,12 @@ class _BuyPeriState extends State<BuyPeri> {
       child: Column(
         children: [
           AppBar(
-            title: Text("Buy Peripherals"),
+            title: Text(
+              "Buy Peripherals",
+              style: TextStyle(
+                  color: Colors.black
+              ),
+            ),
           ),
           Container(
             child: Expanded(
