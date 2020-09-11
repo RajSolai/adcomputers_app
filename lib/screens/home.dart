@@ -1,10 +1,12 @@
 import 'package:adcomputers_app/screens/tabs/buyp.dart';
 import 'package:adcomputers_app/screens/tabs/repair.dart';
 import 'package:adcomputers_app/screens/tabs/sell.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import "package:flutter/material.dart";
 import 'package:adcomputers_app/screens/tabs/buy.dart';
 import 'package:adcomputers_app/screens/tabs/contact.dart';
+import 'package:cupertino_icons/cupertino_icons.dart' as cuicons;
 
 
 class Home extends StatefulWidget {
@@ -47,56 +49,61 @@ class _HomeState extends State<Home> {
               title: Text(
                 "Repair & Service",
                 style: TextStyle(
-                    color: Color(0xff0f4c75)
+                    color: Color(0xff232b2b)
                 ),
               ),
-              icon: FaIcon(
-                FontAwesomeIcons.tools,
-                color: Color(0xff0f4c75),
+              icon: Icon(
+                Icons.home,
+                  size: 30.0,
+                  color: Color(0xff232b2b)
               )),
           BottomNavigationBarItem(
               title: Text(
                 "Buy Computers",
                 style: TextStyle(
-                    color: Color(0xff0f4c75)
+                    color: Color(0xff232b2b)
                 ),
               ),
-              icon: FaIcon(
-                FontAwesomeIcons.laptop,
-                color: Color(0xff0f4c75),
+              icon: Icon(
+                  Icons.laptop,
+                  size: 30.0,
+                  color: Color(0xff232b2b)
               )),
           BottomNavigationBarItem(
               title: Text(
                 "Buy Peripherals",
                 style: TextStyle(
-                    color: Color(0xff0f4c75)
+                    color: Color(0xff232b2b)
                 ),
               ),
-              icon: FaIcon(
-                FontAwesomeIcons.microchip,
-                color: Color(0xff0f4c75),
-              )),
+              icon: Icon(
+                Icons.mouse,
+                  size: 30.0,
+                  color: Color(0xff232b2b)
+              )
+          ),
           BottomNavigationBarItem(
               title: Text(
                 "Sell Computers",
                 style: TextStyle(
-                    color: Color(0xff0f4c75)
+                    color: Color(0xff232b2b)
                 ),
               ),
-              icon: FaIcon(
-                  FontAwesomeIcons.rupeeSign,
-                  color: Color(0xff0f4c75)
+              icon: Icon(
+                  Icons.attach_money,
+                  size: 30.0,
+                  color: Color(0xff232b2b)
               )),
           BottomNavigationBarItem(
               title: Text(
                 "Chat",
                 style: TextStyle(
-                  color: Color(0xff0f4c75)
+                  color: Color(0xff232b2b)
                 ),
               ),
-              icon: FaIcon(
-                FontAwesomeIcons.solidPaperPlane,
-                color: Color(0xff0f4c75)
+              icon: Icon(
+                Icons.chat_bubble_outline,
+                color: Color(0xff232b2b)
               )),
         ],
         onTap: (index) {

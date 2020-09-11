@@ -15,11 +15,15 @@ class _BuyPeriState extends State<BuyPeri> {
     return Container(
       child: Column(
         children: [
-          AppBar(
-            title: Text(
+          AppBar(),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 180, 0),
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 5.0),
+            child: Text(
               "Buy Peripherals",
               style: TextStyle(
-                  color: Colors.black
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26.0
               ),
             ),
           ),

@@ -39,20 +39,17 @@ class _SellState extends State<Sell> {
     });
   }
 
-  Future postProduct() async{
-    await http.post(
-      "http",
-      body: {
-        "frontimg":base64Encode(frontImage),
-        "sideimg":base64Encode(sideImage),
-        "backimg":base64Encode(backImage),
-        "brand":brand,
-        "model":model,
-        "cpu":cpu,
-        "name":name,
-        "contact":contact
-      }
-    );
+  Future postProduct() async {
+    await http.post("http://fast-atoll-71004.herokuapp.com/api/sell", body: {
+      "frontimg": base64Encode(frontImage),
+      "sideimg": base64Encode(sideImage),
+      "backimg": base64Encode(backImage),
+      "brand": brand,
+      "model": model,
+      "cpu": cpu,
+      "name": name,
+      "contact": contact
+    });
   }
 
   String base64Encode(bytes) => base64.encode(bytes);
@@ -60,28 +57,40 @@ class _SellState extends State<Sell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Sell Old Computers",
-          style: TextStyle(
-              color: Colors.black
-          ),
-        ),
-      ),
+      appBar: AppBar(),
       body: Container(
         padding: EdgeInsets.all(10.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 180, 0),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 5.0),
+                child: Text(
+                  "Sell Computers",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26.0
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
               Text(
-                "Upload Images of Computer",
+                "Upload Images of Computer you are Selling",
                 style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(
+                height: 10.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FlatButton.icon(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)
+                      ),
                       onPressed: () => getImage(1),
                       color: isImageUploaded1 ? Colors.green : Colors.red,
                       icon: FaIcon(FontAwesomeIcons.image,
@@ -90,8 +99,11 @@ class _SellState extends State<Sell> {
                         "Front",
                         style: TextStyle(color: Color(0xfffafafa)),
                       )),
-                  SizedBox(width: 8.0),
+                  SizedBox(width: 10.0),
                   FlatButton.icon(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)
+                    ),
                       onPressed: () => getImage(2),
                       color: isImageUploaded2 ? Colors.green : Colors.red,
                       icon: FaIcon(FontAwesomeIcons.image,
@@ -100,8 +112,11 @@ class _SellState extends State<Sell> {
                         "Side",
                         style: TextStyle(color: Color(0xfffafafa)),
                       )),
-                  SizedBox(width: 8.0),
+                  SizedBox(width: 10.0),
                   FlatButton.icon(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)
+                      ),
                       onPressed: () => getImage(3),
                       color: isImageUploaded3 ? Colors.green : Colors.red,
                       icon: FaIcon(
@@ -114,8 +129,11 @@ class _SellState extends State<Sell> {
                       ))
                 ],
               ),
+              SizedBox(
+                height: 20.0,
+              ),
               TextField(
-                onChanged: (String value){
+                onChanged: (String value) {
                   setState(() {
                     brand = value;
                   });
@@ -123,12 +141,13 @@ class _SellState extends State<Sell> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Provide your Name"),              ),
+                    hintText: "Provide Brand Name of Computer"),
+              ),
               SizedBox(
-                height: 5.0,
+                height: 15.0,
               ),
               TextField(
-                onChanged: (String value){
+                onChanged: (String value) {
                   setState(() {
                     model = value;
                   });
@@ -136,12 +155,13 @@ class _SellState extends State<Sell> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Provide your Name"),              ),
+                    hintText: "Provide Model Name of Computer"),
+              ),
               SizedBox(
-                height: 5.0,
+                height: 15.0,
               ),
               TextField(
-                onChanged: (String value){
+                onChanged: (String value) {
                   setState(() {
                     cpu = value;
                   });
@@ -149,12 +169,13 @@ class _SellState extends State<Sell> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Provide your Name"),              ),
+                    hintText: "Provide Processor Name of Computer"),
+              ),
               SizedBox(
-                height: 5.0,
+                height: 15.0,
               ),
               TextField(
-                onChanged: (String value){
+                onChanged: (String value) {
                   setState(() {
                     name = value;
                   });
@@ -162,12 +183,13 @@ class _SellState extends State<Sell> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Provide your Name"),              ),
+                    hintText: "Provide your Name"),
+              ),
               SizedBox(
-                height: 5.0,
+                height: 15.0,
               ),
               TextField(
-                onChanged: (String value){
+                onChanged: (String value) {
                   setState(() {
                     contact = value;
                   });
@@ -175,9 +197,10 @@ class _SellState extends State<Sell> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Provide your Name"),              ),
+                    hintText: "Provide your Contact Number"),
+              ),
               SizedBox(
-                height: 10.0,
+                height: 20.0,
               ),
               CupertinoButton.filled(
                   child: Text("Sell Product"), onPressed: () => print("hello"))

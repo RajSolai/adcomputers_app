@@ -13,6 +13,7 @@ class _SplashState extends State<Splash> {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     if(_prefs.get("uid")==null){
       _prefs.setString("uid", randomString(10));
+      _prefs.setString("name", "");
       _navigator();
     }else{
       _navigator();

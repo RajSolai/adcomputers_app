@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Cards extends StatelessWidget {
   final cardImage =
@@ -16,34 +15,34 @@ class Cards extends StatelessWidget {
         height: 370.0,
         width: 355.0,
         child: Card(
-          elevation: 2.0,
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0)
+          ),
+          child: Container(
+            padding: EdgeInsets.all(5.0),
           child: Column(
             children: [
-              Image.network(
-                cardImage,
-                height: 200.0,
-                width: 300.0,
+              SizedBox(
+                height: 20.0,
+              ),
+              Image.network(cardImage,height: 180,width: 350),
+              SizedBox(
+                height: 20.0,
               ),
               Text("Macbook Air",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                   )),
-              SizedBox(
-                height: 5.0,
-              ),
               Text("Short Description for the product"),
               Container(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)
-                          ),
-                          color: Color(0xff0f4c75),
+                        child: CupertinoButton.filled(
                           onPressed: () => print("hello"),
                           child: Text(
                             "View Deal",
@@ -55,14 +54,7 @@ class Cards extends StatelessWidget {
                         ),
                       ),
                     Container(
-                      child: OutlineButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)
-                        ),
-                        borderSide: BorderSide(
-                          color: Color(0xff0f4c75),
-                          width: 2.0
-                        ),
+                      child: CupertinoButton(
                         onPressed: () => print("hello"),
                         child: Text(
                           "Share Deal",
@@ -76,6 +68,6 @@ class Cards extends StatelessWidget {
               ))
             ],
           ),
-        ));
+        )));
   }
 }

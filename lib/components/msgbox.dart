@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
 class MessageBox extends StatefulWidget {
   final peeruid , message;
@@ -35,18 +34,19 @@ class _MessageBoxState extends State<MessageBox> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(6)),
-              border: Border.all(
-                width: 1.5,
-                color: Color(0xff0f4c75)
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(12.0),
+                  bottomLeft: Radius.circular(12.0)
               ),
-              color: Color(0xFFfafafa),
+              color: Color(0xFF8e8e93),
             ),
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.all(5),
             child: Text(widget.message,
                 style: TextStyle(
                     fontSize: 14,
+                  color: Colors.white
                    ),
             )
           ),
@@ -58,8 +58,12 @@ class _MessageBoxState extends State<MessageBox> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(6)),
-              color: Color(0xff0f4c75),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(12.0),
+                  bottomRight: Radius.circular(12.0)
+              ),
+              color: Color(0xff53d769),
             ),
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.all(5),

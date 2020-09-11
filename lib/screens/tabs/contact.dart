@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:adcomputers_app/components/msgbox.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Contact extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class _ContactState extends State<Contact> {
   String message;
   Timer timer;
   bool isLoading = true;
+  bool userFlag = true;
   ScrollController _scrollController = new ScrollController();
   TextEditingController _messageCtrl = new TextEditingController();
 
@@ -33,24 +36,91 @@ class _ContactState extends State<Contact> {
     await http
         .post("http://fast-atoll-71004.herokuapp.com/api/chat/my69uid", body: {
       "message": message,
-      "peerid": "my62uid", //TODO: put uid of the user
+      "uid": "my69uid", //TODO: put uid of the user
       "timestamp": DateTime.now().toIso8601String()
-    }).then((value) => _messageCtrl.clear());
+    }).then((value) {
+      _messageCtrl.clear();
+      scroll2Bottom();
+    });
+  }
+
+  Future<void> _getName() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    if (_prefs.get("name").toString() == "") {
+      print(_prefs.get("name"));
+      setState(() {
+        userFlag = false;
+      });
+    }
+  }
+
+  checkUser() {
+    if (!userFlag) {
+      print("hey not logged");
+    }
+  }
+
+  Future<void> showNotUserDialog() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title: Center(
+              child: Icon(
+                CupertinoIcons.profile_circled,
+                size: 50.0,
+              ),
+            ),
+            content: Text(
+                "Hey, Please Provide your Name and Contact Number for the further Procedure"),
+            actions: <Widget>[
+              CupertinoButton(
+                  child: Text("Okay"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              CupertinoButton(
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        });
+  }
+
+  void checkChat() {
+    if (message != null) {
+      if (!userFlag) {
+        showNotUserDialog();
+      } else {
+        send();
+      }
+    } else {
+      print("message is null bro");
+    }
+  }
+
+  void scroll2Bottom() {
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300), curve: Curves.easeOut);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getName().then((value) => checkUser());
     timer = Timer.periodic(Duration(milliseconds: 150), (_) => get());
   }
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(milliseconds: 300), () {
-      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-    });
     return Container(
       child: Column(
         children: [
@@ -78,21 +148,28 @@ class _ContactState extends State<Contact> {
                       );
                     })),
           ),
-          TextField(
-            controller: _messageCtrl,
-            onChanged: (value) {
-              setState(() {
-                message = value;
-              });
-            },
-            decoration: InputDecoration(
-                hintText: "Enter Message to Chat",
-                suffixIcon: IconButton(
-                    onPressed: () => send(),
-                    icon: Icon(
-                      Icons.send,
-                    ))),
-          )
+          Container(
+            padding: EdgeInsets.all(15.0),
+            child: TextField(
+              controller: _messageCtrl,
+              onChanged: (value) {
+                setState(() {
+                  message = value;
+                });
+              },
+              onTap: () => scroll2Bottom(),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  hintText: "Enter Message to Chat",
+                  suffixIcon: IconButton(
+                      color: Color(0xff53d769),
+                      onPressed: () => checkChat(),
+                      icon: Icon(
+                        Icons.send,
+                      ))),
+            ),
+          ),
         ],
       ),
     );

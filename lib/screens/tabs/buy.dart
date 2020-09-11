@@ -17,12 +17,6 @@ class _BuyState extends State<Buy> {
       child: Column(
         children: [
           AppBar(
-            title: Text(
-              "Buy Computers",
-              style: TextStyle(
-                color: Colors.black
-              ),
-            ),
             actions: [
               IconButton(
                 iconSize: 20.0,
@@ -35,6 +29,20 @@ class _BuyState extends State<Buy> {
                 },
               )
             ],
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 180, 0),
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 5.0),
+            child: Text(
+              "Buy Computers",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26.0
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 5.0,
           ),
           Container(
             child: Expanded(
