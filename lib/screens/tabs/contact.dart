@@ -156,6 +156,7 @@ class _ContactState extends State<Contact> {
                 setState(() {
                   message = value;
                 });
+                scroll2Bottom();
               },
               onTap: () => scroll2Bottom(),
               decoration: InputDecoration(

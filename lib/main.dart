@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/home": (context) => Home(),
       },
-      theme: ThemeData(
+     theme: ThemeData(
         accentColor: Color(0xff0f4c75),
         accentColorBrightness: Brightness.light,
         scaffoldBackgroundColor: Color(0xfffafafa),

@@ -24,9 +24,6 @@ class _HomeState extends State<Home> {
       child: Buy(),
     ),
     Center(
-      child: BuyPeri(),
-    ),
-    Center(
       child: Sell(),
     ),
     Center(
@@ -41,13 +38,13 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: _screens[_index],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        backgroundColor: Colors.transparent,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xfffafafa),
         currentIndex: _index,
         items: [
           BottomNavigationBarItem(
               title: Text(
-                "Repair & Service",
+                "Repair",
                 style: TextStyle(
                     color: Color(0xff232b2b)
                 ),
@@ -59,7 +56,7 @@ class _HomeState extends State<Home> {
               )),
           BottomNavigationBarItem(
               title: Text(
-                "Buy Computers",
+                "Buy",
                 style: TextStyle(
                     color: Color(0xff232b2b)
                 ),
@@ -69,7 +66,7 @@ class _HomeState extends State<Home> {
                   size: 30.0,
                   color: Color(0xff232b2b)
               )),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
               title: Text(
                 "Buy Peripherals",
                 style: TextStyle(
@@ -81,10 +78,10 @@ class _HomeState extends State<Home> {
                   size: 30.0,
                   color: Color(0xff232b2b)
               )
-          ),
+          ),*/
           BottomNavigationBarItem(
               title: Text(
-                "Sell Computers",
+                "Sell",
                 style: TextStyle(
                     color: Color(0xff232b2b)
                 ),

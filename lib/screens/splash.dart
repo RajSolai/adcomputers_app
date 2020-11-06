@@ -9,7 +9,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  _checkLogin() async{
+  Future<void> _checkLogin() async{
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     if(_prefs.get("uid")==null){
       _prefs.setString("uid", randomString(10));

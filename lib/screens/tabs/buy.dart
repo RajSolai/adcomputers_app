@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'package:adcomputers_app/screens/filterresults.dart';
-import 'package:adcomputers_app/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "package:adcomputers_app/components/card.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class Buy extends StatefulWidget {
   @override
@@ -11,6 +12,23 @@ class Buy extends StatefulWidget {
 }
 
 class _BuyState extends State<Buy> {
+  String apiUri = "https://fast-atoll-71004.herokuapp.com/api/sell";
+  Map data;
+  List products;
+  Future<void> get() async{
+    http.get(apiUri).then((value) => {
+      data = json.decode(value.body),
+      setState((){
+        products = data['data'];
+      })
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    get();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,12 +64,14 @@ class _BuyState extends State<Buy> {
           ),
           Container(
             child: Expanded(
-                child: ListView(
-                  children: [
-                    Cards(),
-                    Cards(),
-                    Cards()
-                  ],
+                child: ListView.builder(
+                  itemCount: products==null?0:products.length,
+                  itemBuilder: (BuildContext context,int index){
+                    return Cards(
+                      desc: products[index]['brand'],
+                      title: products[index]['model'],
+                    );
+                  }
             )),
           )
         ],

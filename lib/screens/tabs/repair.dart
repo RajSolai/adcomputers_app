@@ -18,7 +18,7 @@ class _RepairState extends State<Repair> {
             icon: Icon(
               CupertinoIcons.profile_circled,
               size: 30.0,
-              color: Colors.black,
+              color: Color(0xff147EFB),
             ),
           )
         ],
@@ -42,11 +42,11 @@ class _RepairState extends State<Repair> {
                 children: [
                   ClickCard(
                       content: "Physical Damage Repairs",
-                      coverimg: "assets/lapbro.jpg",
+                      coverimg: "assets/lapbro.png",
                       textcolor: Colors.black),
                   ClickCard(
                       content: "RAM/HDD Upgrade",
-                      coverimg: "assets/rampic.jpg",
+                      coverimg: "assets/rampic.png",
                       textcolor: Colors.white),
                 ],
               ),
@@ -54,11 +54,11 @@ class _RepairState extends State<Repair> {
                 children: [
                   ClickCard(
                       content: "Data Recovery",
-                      coverimg: "assets/datar.jpg",
+                      coverimg: "assets/datar.png",
                       textcolor: Colors.white),
                   ClickCard(
                       content: "Trouble shooting",
-                      coverimg: "assets/tshoot.jpg",
+                      coverimg: "assets/tshoot.png",
                       textcolor: Colors.white),
                 ],
               ),

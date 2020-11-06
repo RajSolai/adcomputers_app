@@ -18,6 +18,7 @@ class _SellState extends State<Sell> {
   String brand;
   String model;
   String cpu;
+  String price;
   String name;
   String contact;
   bool isImageUploaded1 = false;
@@ -28,31 +29,166 @@ class _SellState extends State<Sell> {
   Future getImage(int number) async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
-      frontImage = File(pickedFile.path).readAsBytesSync();
       if (number == 1) {
+        frontImage = File(pickedFile.path).readAsBytesSync();
         isImageUploaded1 = true;
       } else if (number == 2) {
+        sideImage = File(pickedFile.path).readAsBytesSync();
         isImageUploaded2 = true;
       } else {
+        backImage = File(pickedFile.path).readAsBytesSync();
         isImageUploaded3 = true;
       }
     });
   }
 
-  Future postProduct() async {
-    await http.post("http://fast-atoll-71004.herokuapp.com/api/sell", body: {
-      "frontimg": base64Encode(frontImage),
-      "sideimg": base64Encode(sideImage),
-      "backimg": base64Encode(backImage),
-      "brand": brand,
-      "model": model,
-      "cpu": cpu,
-      "name": name,
-      "contact": contact
+  Future<void> showNullValueDialog() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title: Center(
+              child: Icon(
+                CupertinoIcons.add_circled,
+                size: 50.0,
+              ),
+            ),
+            content: Text(
+                "Hey, Please Provide all the Values"),
+            actions: <Widget>[
+              CupertinoButton(
+                  child: Text("Okay"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              CupertinoButton(
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        });
+  }
+
+  void checkAndPost(data) {
+    if (data['frontimg'] == null ||
+        data['backimg'] == null ||
+        data['sideimg'] == null ||
+        data['name'] == null ||
+        data['price'] == null ||
+        data['contact'] == null ||
+        data['brand'] == null ||
+        data['model'] == null ||
+        data['cpu'] == null) {
+      showNullValueDialog();
+    } else {
+      postProduct(data);
+    }
+  }
+
+  Future<void> postProduct(data) async {
+    showUploadingDialog();
+    String url = "http://fast-atoll-71004.herokuapp.com/api/sell";
+    await http.post(url, body: data).then((value) {
+      Navigator.of(context, rootNavigator: true).pop('dialog');
+      if (value.statusCode != 200) {
+        showUploadErrorDialog();
+      } else {
+        showUploadSuccessDialog();
+      }
+      print(value.statusCode);
     });
   }
 
+  Future<void> showUploadSuccessDialog() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title: Center(
+              child: Icon(
+                CupertinoIcons.check_mark_circled,
+                size: 50.0,
+              ),
+            ),
+            content: Text("Product Uploaded Successfully"),
+            actions: <Widget>[
+              CupertinoButton(
+                  child: Text("Okay"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        });
+  }
+
+  Future<void> showUploadErrorDialog() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title: Center(
+              child: Icon(
+                CupertinoIcons.minus_circled,
+                size: 50.0,
+                color: Colors.redAccent,
+              ),
+            ),
+            content: Text("Product Upload Failed"),
+            actions: <Widget>[
+              CupertinoButton(
+                  child: Text("Okay"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        });
+  }
+
+  Future<void> showUploadingDialog() async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title: Icon(
+              CupertinoIcons.share,
+              size: 50.0,
+            ),
+            content: Row(
+              children: <Widget>[
+                Text(
+                  "Posting Your Product Please Wait !",
+                  textScaleFactor: 1.0,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   String base64Encode(bytes) => base64.encode(bytes);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +204,7 @@ class _SellState extends State<Sell> {
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5.0),
                 child: Text(
                   "Sell Computers",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26.0
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26.0),
                 ),
               ),
               SizedBox(
@@ -89,8 +222,7 @@ class _SellState extends State<Sell> {
                 children: [
                   FlatButton.icon(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
+                          borderRadius: BorderRadius.circular(8.0)),
                       onPressed: () => getImage(1),
                       color: isImageUploaded1 ? Colors.green : Colors.red,
                       icon: FaIcon(FontAwesomeIcons.image,
@@ -101,9 +233,8 @@ class _SellState extends State<Sell> {
                       )),
                   SizedBox(width: 10.0),
                   FlatButton.icon(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)
-                    ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
                       onPressed: () => getImage(2),
                       color: isImageUploaded2 ? Colors.green : Colors.red,
                       icon: FaIcon(FontAwesomeIcons.image,
@@ -115,8 +246,7 @@ class _SellState extends State<Sell> {
                   SizedBox(width: 10.0),
                   FlatButton.icon(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
+                          borderRadius: BorderRadius.circular(8.0)),
                       onPressed: () => getImage(3),
                       color: isImageUploaded3 ? Colors.green : Colors.red,
                       icon: FaIcon(
@@ -177,6 +307,20 @@ class _SellState extends State<Sell> {
               TextField(
                 onChanged: (String value) {
                   setState(() {
+                    price = value;
+                  });
+                },
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    hintText: "Determine the Price of Computer"),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              TextField(
+                onChanged: (String value) {
+                  setState(() {
                     name = value;
                   });
                 },
@@ -199,11 +343,26 @@ class _SellState extends State<Sell> {
                         borderRadius: BorderRadius.circular(10)),
                     hintText: "Provide your Contact Number"),
               ),
+
               SizedBox(
                 height: 20.0,
               ),
               CupertinoButton.filled(
-                  child: Text("Sell Product"), onPressed: () => print("hello"))
+                  child: Text("Sell Product"),
+                  onPressed: () {
+                    var data = {
+                      "frontimg": base64Encode(frontImage),
+                      "sideimg": base64Encode(sideImage),
+                      "backimg": base64Encode(backImage),
+                      "brand": brand,
+                      "model": model,
+                      "cpu": cpu,
+                      "price": price,
+                      "name": name,
+                      "contact": contact
+                    };
+                    checkAndPost(data);
+                  })
             ],
           ),
         ),
